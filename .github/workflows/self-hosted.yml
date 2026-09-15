@@ -1,0 +1,27 @@
+name: Workflow on self-hosted runner
+
+on: push
+
+jobs:
+  job_nodejs:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+        # this action will checkout the code on the runner VM
+
+      - name: Install Nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install nodejs dependencies
+        run: npm ci
+        # this will install all the dependencies mentioned in package.json
+
+      - name: Execute test cases
+        run: npm test
+        # this will execute all the test cases mentioned in the src folder
+
+      - name: Build the application
+        run: npm run build
+        # this will build the application and create a dist folder
